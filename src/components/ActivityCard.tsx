@@ -37,6 +37,7 @@ const ActivityCard = ({ activity }: ActivityProp) => {
     if (userId !== null) {
       getUserPlans(userId);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const addToPlan = async () => {

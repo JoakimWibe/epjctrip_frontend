@@ -10,6 +10,7 @@ const PlanDetails = () => {
 
   useEffect(() => {
     getPlan();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const getPlan = async () => {
