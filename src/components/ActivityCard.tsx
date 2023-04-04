@@ -51,6 +51,7 @@ const ActivityCard = ({ activity }: ActivityProp) => {
       link: activity.web_url,
       imageUrl: image,
       rating: activity.rating,
+      ranking: activity.ranking,
       street: activity.address,
       reviewsNumber: activity.num_reviews,
       city: activity.address_obj.city,
@@ -97,7 +98,6 @@ const ActivityCard = ({ activity }: ActivityProp) => {
           <Text fontWeight={'bold'}>{activity.ranking}</Text>
           <Text>Number of reviews: {activity.num_reviews}</Text>
           <Text>Address: {activity.address}</Text>
-          
         </Stack>
       </CardBody>
       <CardFooter display={'flex'} flexDirection={'column'}>
@@ -128,14 +128,26 @@ const ActivityCard = ({ activity }: ActivityProp) => {
       {addClicked === true && !loggedIn && (
         <Alert status={'info'}>
           <AlertIcon />
-          Please log in to add an activity
+          <Text>
+            Please log in to add an activity{' '}
+            <Link href="/login">
+              Login
+            </Link>
+          </Text>
         </Alert>
       )}
 
       {addClicked === true && loggedIn === true && !planExists && (
         <Alert status={'info'}>
           <AlertIcon />
-          Please Create a plan on "my plan" page before adding activites
+          Please Create a plan on "Travel Planner" page before adding activites
+        </Alert>
+      )}
+
+      {addClicked === true && loggedIn === true && !choosenPlan && (
+        <Alert status={'info'}>
+          <AlertIcon />
+          Please select a plan before adding activites
         </Alert>
       )}
     </Card>

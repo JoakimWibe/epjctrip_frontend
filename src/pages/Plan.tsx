@@ -1,3 +1,4 @@
+
 import AddedActivitiyCard from "../components/AddedActivitiyCard";
 import moment from "moment";
 import { NewPlan } from "../App";
@@ -23,6 +24,7 @@ import {
 import axios from "axios";
 import PlanCard from "../components/PlanCard";
 import { TripContext } from "../context/Context";
+
 
 export interface SavedPlan {
   id: number;
@@ -61,10 +63,16 @@ const Plan = () => {
     }
   };
 
-  const getPlanFromApi = async () => {
-    const plans = await getPlan();
-    setPlans(plans || []);
-  };
+  // const [plans, setPlans] = useState<SavedPlan[]>([]);
+  // const [selectedPlan, setSelectedPlan] = useState<SavedPlan | undefined>(undefined);
+
+  // const userId = localStorage.getItem('userId');
+
+  // const getPlanFromApi = async () => {
+  //   const plans = await getPlan();
+  //   setPlans(plans || []);
+  // };
+
 
   const savePlan = async (plan: NewPlan) => {
     const saveAPlan = await postPlan(plan);
@@ -73,40 +81,36 @@ const Plan = () => {
     }
   };
 
-  const saveUpdatedPlan = async (id: number, plan: NewPlan) => {
-    const updateAPlan = await updatePlan(id, plan);
-    const updatedPlans = plans.map((plan: any) => {
-      if (plan.id === id) {
-        return updateAPlan;
-      }
-      return plan;
-    });
-    setPlans(updatedPlans);
-  };
 
-  const deletePlan = async (id: number) => {
-    await deletePlanById(id);
-    const filterPlans = plans.filter((plan: any) => plan.id !== id);
-    setPlans(filterPlans);
-    localStorage.removeItem("planId");
-  };
 
-  useEffect(() => {
-    getPlanFromApi();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[]);
+  // const saveUpdatedPlan = async (id: number, plan: NewPlan) => {
+  //   const updateAPlan = await updatePlan(id, plan);
+  //   const updatedPlans = plans.map(plan => {
+  //     if (plan.id === id) {
+  //       return updateAPlan;
+  //     }
+  //     return plan;
+  //   });
+  //   setPlans(updatedPlans);
+  // };
 
-  const { onOpen, isOpen, onClose } = useDisclosure();
+  // useEffect(() => {
+  //   getPlanFromApi();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
 
-  const handleDelete = (id: number) => {
-    console.log(id);
-    deletePlan(id);
-  };
+  const { onOpen, onClose, isOpen } = useDisclosure();
 
-  const handleOnClick = (plan: SavedPlan) => {
-    setSelectedPlan(plan);
-    onOpen();
-  };
+  // const handleDelete = (id: number) => {
+  //   console.log(id);
+  //   deletePlan(id);
+  // };
+
+  // const handleOnClick = (plan: SavedPlan) => {
+  //   setSelectedPlan(plan);
+  //   onOpen();
+  // };
+
 
   return (
     <Flex pt={40} direction={"column"} maxW={"3xl"} mx={{ sm: 5, md: "auto" }}>
@@ -192,14 +196,10 @@ const Plan = () => {
                 </Flex>
               </Flex>
             ))}
-      </Flex>
-      <PlanForm
-        savePlan={savePlan}
-        saveUpdatedPlan={saveUpdatedPlan}
-        isOpen={isOpen}
-        onClose={onClose}
-        plan={selectedPlan}
-      />
+
+      </Flex> */}
+      <PlanForm savePlan={savePlan} isOpen={isOpen} onClose={onClose} />
+
     </Flex>
   );
 };

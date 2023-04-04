@@ -1,9 +1,10 @@
-import { Button, Card, CardBody, Flex, Heading, Text } from '@chakra-ui/react';
+import { Button, Card, CardBody, Flex, Heading, IconButton, Text } from '@chakra-ui/react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { planUrl } from '../constants/api';
 import { useContext } from 'react';
 import { TripContext } from '../context/Context';
+import { DeleteIcon } from '@chakra-ui/icons';
 
 const PlanCard = ({ plan }: any) => {
   const { setPlans, plans }: any = useContext(TripContext);
@@ -23,17 +24,19 @@ const PlanCard = ({ plan }: any) => {
         <Heading mb={4}>{plan.name}</Heading>
         <Text mb={4}>Destination: {plan.destination}</Text>
         <Flex alignItems={'center'}>
-          <Button
+          <IconButton
             onClick={() => {
               deletePlan(plan.id);
               return;
             }}
-            colorScheme="red"
             mr={6}
-          >
-            Delete plan
-          </Button>
-          <Link to={`/travelplanner/${plan.id}`}>Go to plan</Link>
+            icon={<DeleteIcon />}
+            aria-label="delete plan"
+          />
+
+          <Link to={`/travelplanner/${plan.id}`}>
+            <Button colorScheme="blue">Go to plan</Button>
+          </Link>
         </Flex>
       </CardBody>
     </Card>

@@ -26,6 +26,7 @@ function App() {
   const [loggedIn, setLoggedIn] = useState(localStorage.getItem('email') !== null);
   const [loading, setLoading] = useState(false);
   const [plans, setPlans]: any = useState([]);
+  const [planActivities, setPlanActivities]: any = useState([]);
 
   const [searchInputValue, setSearchInputValue] = useState('');
   const [isInputSearched, setIsInputSearched] = useState(false);
@@ -47,12 +48,14 @@ function App() {
         setLoading,
         plans,
         setPlans,
+        planActivities,
+        setPlanActivities,
       }}
     >
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path='/co2calculator' element={<TravelForm />} />
+        <Route path="/co2calculator" element={<TravelForm />} />
         <Route path="/travelplanner" element={<Plan />} />
         <Route path="/travelplanner/:id" element={<PlanDetails />} />
         <Route path="/about" element={<About />} />

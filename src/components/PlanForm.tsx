@@ -13,11 +13,13 @@ import {
   NumberInput,
   NumberInputField,
 } from '@chakra-ui/react';
-import moment from 'moment';
-import { useEffect, useState } from 'react';
+// import moment from 'moment';
+import { useState } from 'react';
 import { NewPlan } from '../App';
+
 import { SavedPlan } from '../pages/Plan';
 import { useForm, SubmitHandler } from 'react-hook-form';
+
 
 const defaultState = {
   name: '',
@@ -31,42 +33,35 @@ const defaultState = {
 };
 
 interface PlanFormProps {
-  plan?: SavedPlan;
+  // plan?: SavedPlan;
   savePlan: (plan: NewPlan) => void;
-  saveUpdatedPlan: (id: number, plan: NewPlan) => void;
+  // saveUpdatedPlan: (id: number, plan: NewPlan) => void;
   isOpen: boolean;
   onClose: () => void;
 }
 
-type Inputs = {
-  example: string,
-  exampleRequired: string,
-};
 
-const PlanForm = ({ savePlan, saveUpdatedPlan, plan, isOpen, onClose }: PlanFormProps) => {
-  //code for useForm()
-  const { register, handleSubmit, watch, formState: { errors } } = useForm<Inputs>();
-  const onSubmit: SubmitHandler<Inputs> = data => console.log(data);
-  console.log(watch("example"))
+
+const PlanForm = ({ savePlan, isOpen, onClose }: PlanFormProps) => {
 
   const [myPlan, setMyPlan] = useState(defaultState);
 
-  const { name, departure, destination, startDate, endDate, participants } = myPlan;
+  const { name, departure, destination, startDate, endDate, participants, cost } = myPlan;
 
   // Use effect tracks the plan variable
-  useEffect(() => {
+  // useEffect(() => {
     // If the plan exists (is NOT udefined or null)
     // the set state will be called to update the form
-    if (plan) {
+    // if (plan) {
       // with this syntax you extract from plan the keys id and activities and keep all the
       // remaining keys / data in the variable planData
-      const { id, activities, ...planData } = plan;
+  //     const { id, activities, ...planData } = plan;
 
-      planData.startDate = moment(plan.startDate).format('YYYY-MM-DD');
-      planData.endDate = moment(plan.endDate).format('YYYY-MM-DD');
-      setMyPlan(planData);
-    }
-  }, [plan]);
+  //     planData.startDate = moment(plan.startDate).format('YYYY-MM-DD');
+  //     planData.endDate = moment(plan.endDate).format('YYYY-MM-DD');
+  //     setMyPlan(planData);
+  //   }
+  // }, [plan]);
 
   const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -78,13 +73,13 @@ const PlanForm = ({ savePlan, saveUpdatedPlan, plan, isOpen, onClose }: PlanForm
 
     if (userId !== null) {
       const parsedUserId = parseInt(userId);
-      if (plan) {
-        saveUpdatedPlan(plan.id, myPlan);
-      } else {
+      // if (plan) {
+      //   saveUpdatedPlan(plan.id, myPlan);
+      // } else {
         myPlan.userId = parsedUserId;
         savePlan(myPlan);
         setMyPlan(defaultState);
-      }
+      // }
     }
   };
 
@@ -126,11 +121,12 @@ const PlanForm = ({ savePlan, saveUpdatedPlan, plan, isOpen, onClose }: PlanForm
                   <NumberInputField value={participants} onChange={e => setMyPlan({ ...myPlan, participants: +e.target.value })} />
                 </NumberInput>
               </Box>
-              {/* <Box>
+              <Box>
                 <FormLabel>Planned budget</FormLabel>
                 <Input value={cost} onChange={e => setMyPlan({ ...myPlan, cost: +e.target.value })} placeholder="€ " />
-              </Box> */}
-              
+
+              </Box>
+
             </form>
           </DrawerBody>
           <DrawerFooter borderTopWidth="1px">
