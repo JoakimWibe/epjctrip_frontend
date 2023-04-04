@@ -1,4 +1,4 @@
-import { Button, Flex, Heading, Input } from '@chakra-ui/react';
+import { Button, Flex, Heading, Input, Text } from '@chakra-ui/react';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import { loginUrl } from '../constants/api';
@@ -48,8 +48,10 @@ const LoginForm = () => {
           Log in
         </Heading>
 
-        <Input defaultValue="" {...register('email')} variant="flushed" type="email" placeholder="Email..." />
-        <Input my={5} defaultValue="" {...register('password')} variant="flushed" type="password" placeholder="Password..." />
+        <Input defaultValue="" {...register('email', { required: true })} variant="flushed" type="email" placeholder="Email..." mb={5}/>
+        {errors.email && <Text mb={5} color={'red.400'}>This field is required</Text>}
+        <Input my={5} defaultValue="" {...register('password', { required: true })} variant="flushed" type="password" placeholder="Password..."mb={5} />
+        {errors.password && <Text mb={5} color={'red.400'}>This field is required</Text>}
         <Button colorScheme="blue" type="submit">
           Log in
         </Button>

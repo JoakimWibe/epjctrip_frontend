@@ -9,7 +9,6 @@ const Login = () => {
   return (
     <Flex direction={'column'} pt={40} mx={7}>
       {hasUser ? <LoginForm /> : <SignupForm />}
-
       {hasUser ? (
         <Flex mt={5} justifyContent={'center'} alignItems="center">
           <Text mr={5}>Are you not EPjC yet?</Text>

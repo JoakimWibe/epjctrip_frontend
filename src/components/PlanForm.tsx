@@ -17,6 +17,7 @@ import moment from 'moment';
 import { useEffect, useState } from 'react';
 import { NewPlan } from '../App';
 import { SavedPlan } from '../pages/Plan';
+import { useForm, SubmitHandler } from 'react-hook-form';
 
 const defaultState = {
   name: '',
@@ -37,7 +38,17 @@ interface PlanFormProps {
   onClose: () => void;
 }
 
+type Inputs = {
+  example: string,
+  exampleRequired: string,
+};
+
 const PlanForm = ({ savePlan, saveUpdatedPlan, plan, isOpen, onClose }: PlanFormProps) => {
+  //code for useForm()
+  const { register, handleSubmit, watch, formState: { errors } } = useForm<Inputs>();
+  const onSubmit: SubmitHandler<Inputs> = data => console.log(data);
+  console.log(watch("example"))
+
   const [myPlan, setMyPlan] = useState(defaultState);
 
   const { name, departure, destination, startDate, endDate, participants } = myPlan;
@@ -59,6 +70,10 @@ const PlanForm = ({ savePlan, saveUpdatedPlan, plan, isOpen, onClose }: PlanForm
 
   const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    //form validation before implementing the logic
+    handleSubmit(onSubmit);
+
     const userId = localStorage.getItem('userId');
 
     if (userId !== null) {
@@ -84,11 +99,14 @@ const PlanForm = ({ savePlan, saveUpdatedPlan, plan, isOpen, onClose }: PlanForm
             <form onSubmit={handleFormSubmit} id="my-form">
               <Box>
                 <FormLabel>Plan name</FormLabel>
-                <Input value={name} onChange={e => setMyPlan({ ...myPlan, name: e.target.value })} placeholder="Plan name" />
+                <Input {...register("example")} value={name} onChange={e => setMyPlan({ ...myPlan, name: e.target.value })} placeholder="Plan name" />
               </Box>
               <Box>
                 <FormLabel>Departure</FormLabel>
-                <Input value={departure} onChange={e => setMyPlan({ ...myPlan, departure: e.target.value })} placeholder="city of departure" />
+                <Input {...register("exampleRequired", { required: true })}
+                {...errors.exampleRequired && <span>This field is required</span>}
+                
+                value={departure} onChange={e => setMyPlan({ ...myPlan, departure: e.target.value })} placeholder="city of departure" />
               </Box>
               <Box>
                 <FormLabel>Destination</FormLabel>
@@ -112,6 +130,7 @@ const PlanForm = ({ savePlan, saveUpdatedPlan, plan, isOpen, onClose }: PlanForm
                 <FormLabel>Planned budget</FormLabel>
                 <Input value={cost} onChange={e => setMyPlan({ ...myPlan, cost: +e.target.value })} placeholder="€ " />
               </Box> */}
+              
             </form>
           </DrawerBody>
           <DrawerFooter borderTopWidth="1px">
