@@ -17,7 +17,7 @@ export interface SavedPlan {
   startDate: string;
   endDate: string;
   participants: number;
-  cost: number;
+  budget: number;
   activities: [];
   userId: number;
 }
@@ -45,13 +45,6 @@ const Plan = () => {
   // const [plans, setPlans] = useState<SavedPlan[]>([]);
   // const [selectedPlan, setSelectedPlan] = useState<SavedPlan | undefined>(undefined);
 
-  // const userId = localStorage.getItem('userId');
-
-  // const getPlanFromApi = async () => {
-  //   const plans = await getPlan();
-  //   setPlans(plans || []);
-  // };
-
   const savePlan = async (plan: NewPlan) => {
     const saveAPlan = await postPlan(plan);
     if (saveAPlan) {
@@ -59,27 +52,7 @@ const Plan = () => {
     }
   };
 
-  // const saveUpdatedPlan = async (id: number, plan: NewPlan) => {
-  //   const updateAPlan = await updatePlan(id, plan);
-  //   const updatedPlans = plans.map(plan => {
-  //     if (plan.id === id) {
-  //       return updateAPlan;
-  //     }
-  //     return plan;
-  //   });
-  //   setPlans(updatedPlans);
-  // };
-
-  // useEffect(() => {
-  //   getPlanFromApi();
-  // }, []);
-
   const { onOpen, onClose, isOpen } = useDisclosure();
-
-  // const handleDelete = (id: number) => {
-  //   console.log(id);
-  //   deletePlan(id);
-  // };
 
   // const handleOnClick = (plan: SavedPlan) => {
   //   setSelectedPlan(plan);
@@ -100,57 +73,10 @@ const Plan = () => {
       <Divider mb={4} />
 
       <Flex direction={'column'}>
-        {plans.map((plan: any) => (
+        {plans.filter((planByUser: any) => planByUser.userId === userId).map((plan: any) => (
           <PlanCard plan={plan} />
         ))}
       </Flex>
-
-      {/* <Flex>
-        {userId !== null &&
-          plans
-            .filter(plan => plan.userId === parseInt(userId))
-            .map((plan: SavedPlan) => (
-              <Flex direction={'column'} key={plan.id}>
-                <Heading mb={4} fontSize={'3xl'}>
-                  {plan.name}
-                </Heading>
-                <Grid gap={4} mb={4} gridTemplateColumns={'1fr 1fr'}>
-                  <Text>Departure: {plan.departure}</Text>
-                  <Text>Destination: {plan.destination}</Text>
-                  <Text>Start Date: {moment(plan.startDate).format('YYYY-MM-DD')}</Text>
-                  <Text>End Date: {moment(plan.endDate).format('YYYY-MM-DD')}</Text>
-                  <Text>Participants: {plan.participants}</Text>
-                  <Text>
-                    Cost of your trip: €
-                    {plan.activities === null
-                      ? 0
-                      : plan.activities?.map((activity: any) => activity?.price).reduce((a, b) => a + b, 0) * plan.participants}
-                  </Text>
-                </Grid>
-                <Flex my={8}>
-                  <Button colorScheme="blue" mr={6} onClick={() => handleOnClick(plan)}>
-                    Update
-                  </Button>
-                  <Button background={'white'} border={'1px'} borderColor={'red.500'} color={'red.500'} onClick={() => handleDelete(plan.id)}>
-                    Delete
-                  </Button>
-                </Flex>
-
-                <Divider mb={4} />
-
-                <Heading fontSize={'3xl'} mb={8}>
-                  Activities
-                </Heading>
-                <Flex direction={'column'}>
-                  {plan.activities
-                    ?.filter((activity: any) => activity.planId === plan.id)
-                    .map((planActivity: any) => (
-                      <AddedActivitiyCard key={planActivity.id} activity={planActivity} />
-                    ))}
-                </Flex>
-              </Flex>
-            ))}
-      </Flex> */}
       <PlanForm savePlan={savePlan} isOpen={isOpen} onClose={onClose} />
     </Flex>
   );

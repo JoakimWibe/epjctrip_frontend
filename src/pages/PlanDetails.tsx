@@ -2,11 +2,13 @@ import { useContext, useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { planUrl } from '../constants/api';
 import axios from 'axios';
-import { Button, Divider, Flex, Heading, Text } from '@chakra-ui/react';
+import { Button, Divider, Flex, Heading, Text, useDisclosure } from '@chakra-ui/react';
 import AddedActivitiyCard from '../components/AddedActivitiyCard';
 import moment from 'moment';
 import { TripContext } from '../context/Context';
 import { ArrowBackIcon } from '@chakra-ui/icons';
+import UpdatePlanForm from '../components/UpdatePlanForm';
+
 
 const PlanDetails = () => {
   let { id } = useParams();
@@ -28,6 +30,8 @@ const PlanDetails = () => {
     }
   };
 
+  const { onOpen, onClose, isOpen } = useDisclosure();
+
   return (
     <Flex direction={'column'} w={'3xl'} pt={40} mx={'auto'} justifyContent={'center'}>
       <Link to="/travelplanner">
@@ -39,7 +43,7 @@ const PlanDetails = () => {
 
       <Flex my={6} w={'full'} justifyContent={'space-between'}>
         <Heading>{plan.name}</Heading>
-        <Button colorScheme="blue">Edit plan</Button>
+        <Button colorScheme="blue" onClick={onOpen}>Edit plan</Button>
       </Flex>
 
       <Divider mb={6} />
@@ -69,6 +73,7 @@ const PlanDetails = () => {
           <Text>No activities added yet</Text>
         )}
       </Flex>
+      <UpdatePlanForm plan={plan} setPlan={setPlan} isOpen={isOpen} onClose={onClose} onOpen={onOpen} />
     </Flex>
   );
 };

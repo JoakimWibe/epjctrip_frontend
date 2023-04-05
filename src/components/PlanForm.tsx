@@ -14,13 +14,11 @@ import {
   NumberInputField,
   Text,
 } from "@chakra-ui/react";
-
 import { NewPlan } from "../App";
 import { useForm } from "react-hook-form";
 
 interface PlanFormProps {
   savePlan: (plan: NewPlan) => void;
-
   isOpen: boolean;
   onClose: () => void;
 }
@@ -67,7 +65,7 @@ const PlanForm = ({ savePlan, isOpen, onClose }: PlanFormProps) => {
         <DrawerOverlay />
         <DrawerContent>
           <DrawerCloseButton />
-          <DrawerHeader borderBottomWidth="1px">Your plan</DrawerHeader>
+          <DrawerHeader borderBottomWidth="1px">Create a plan</DrawerHeader>
           <DrawerBody pt={20}>
             <form onSubmit={handleSubmit(handleFormSubmit)} id="my-form">
               <Box>
