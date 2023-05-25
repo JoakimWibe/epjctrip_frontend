@@ -29,7 +29,7 @@ const ActivityGallery = () => {
   const { recommendedActivities } = useContext<any>(TripContext);
 
   return (
-    <Grid gridTemplateColumns={{ sm: '1fr', md: '1fr 1fr 1fr' }} gap={6} my={6} mx={10}>
+    <Grid gridTemplateColumns={{ base: '1fr', md: '1fr 1fr 1fr' }} gap={6} my={6} mx={10}>
       {recommendedActivities.map((activity: RecommendedActivity) => (
         <ActivityCard activity={activity} />
       ))}

@@ -69,7 +69,7 @@ const FilterActivities = () => {
 
   return (
     <Box
-      mt={recommendedActivities.length < 1 ? 0 : { sm: 32, md: 52 }}
+      mt={recommendedActivities.length < 1 ? 0 : { base: 32, md: 52 }}
       mb={20}
       background={'#fafafa'}
       py={10}

@@ -42,12 +42,9 @@ const SignupForm = () => {
    }
  };
 
-
-
-
  return (
    <form onSubmit={handleSubmit(registerUser)}>
-     <Flex direction={'column'} maxW="md" m={{ sm: 5, md: 'auto' }}>
+     <Flex direction={'column'} maxW="md" m={{ base: 5, md: 'auto' }}>
        <Heading color={'gray.700'}  mb={5} fontSize="lg">
          Sign up
        </Heading>
